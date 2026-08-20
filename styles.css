@@ -1,0 +1,719 @@
+/* ===== Tokens ===== */
+:root {
+  --bg: #ffffff;
+  --fg: #1f1f1f;
+  --fg-secondary: #4a4a4a;
+  --fg-tertiary: #c7c7c7;
+  --surface-2: #f5f5f5;
+  --border: #e5e5e5;
+  --border-subtle: rgba(0, 0, 0, 0.07);
+
+  --footer-bg: #f5f4f0;
+  --footer-fg: #2c2a26;
+  --footer-fg-secondary: #6e6a62;
+  --footer-mark: #ebe9e1;
+
+  --pill-bg: rgba(255, 255, 255, 0.85);
+  --pill-fill: rgba(229, 229, 229, 0.9);
+
+  --radius-pill: 999px;
+  --font: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+}
+
+/* The reference site stays light regardless of system theme — so do we. */
+
+/* ===== Base ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--footer-bg); /* shows behind the sticky-reveal footer */
+  color: var(--fg);
+  line-height: 1.5;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Page content scrolls above the sticky footer */
+.page {
+  position: relative;
+  z-index: 10;
+  background: var(--bg);
+  border-radius: 0 0 48px 48px;
+  box-shadow: 0 16px 28px -10px rgba(0, 0, 0, 0.13);
+}
+
+/* ===== Hero section wrapper ===== */
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+/* ===== Announcement bar ===== */
+.announce {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  background: var(--footer-bg);
+  color: var(--footer-fg);
+  border-bottom: 1px solid var(--footer-mark);
+}
+
+.announce-text {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.announce-arrow {
+  transition: transform 0.15s ease;
+}
+
+.announce:hover .announce-arrow {
+  transform: translateX(3px);
+}
+
+/* ===== Mobile header (hidden on desktop) ===== */
+.mheader {
+  position: relative;
+  z-index: 40;
+  background: var(--bg);
+}
+
+.mheader-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px 24px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.logo-mark {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.logo-word {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.mheader-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--bg);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.burger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.burger svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Dropdown menu */
+.mmenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.mmenu.open {
+  grid-template-rows: 1fr;
+  pointer-events: auto;
+}
+
+.mmenu-inner {
+  overflow: hidden;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border-subtle);
+  box-shadow: 0 16px 28px -10px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.mmenu.open .mmenu-inner {
+  opacity: 1;
+}
+
+.mmenu-links {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 12px 24px 0;
+}
+
+.mmenu-links a {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.mmenu-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 32px auto 0;
+  padding: 24px 24px 32px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.mmenu-social {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.mmenu-social a {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  color: var(--fg-secondary);
+}
+
+.mmenu-social svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ===== Buttons ===== */
+.btn-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 20px;
+  border-radius: var(--radius-pill);
+  background: var(--fg);
+  color: var(--bg);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.btn-download:hover {
+  transform: scale(1.03);
+}
+
+.btn-download-sm {
+  font-size: 14px;
+  padding: 8px 14px;
+}
+
+.btn-download-wide {
+  width: 100%;
+  padding: 16px;
+}
+
+.apple-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.btn-download-sm .apple-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.link-demo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg-secondary);
+  transition: color 0.15s ease;
+}
+
+.link-demo:hover {
+  color: var(--fg);
+}
+
+.play-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ===== Hero ===== */
+.hero {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.hero-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 24px 24px;
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.hero-logo {
+  display: none;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-headline {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+}
+
+.hero-ctas {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ===== Phone (screen intentionally left black) ===== */
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+.phone {
+  /* cqw units inside refer to this box; its own frame sizes off --pw */
+  --pw: min(280px, 74vw);
+  container-type: inline-size;
+  width: var(--pw);
+  aspect-ratio: 402 / 874;
+  border-radius: calc(var(--pw) * 0.15);
+  background: #fdfdfd;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: calc(var(--pw) * 0.032);
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.22);
+}
+
+.phone-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 11.5cqw;
+  background: #000;
+  overflow: hidden;
+}
+
+.phone-island {
+  position: absolute;
+  top: 4cqw;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30cqw;
+  height: 8.5cqw;
+  border-radius: 999px;
+  background: #111;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.phone-prompt {
+  position: absolute;
+  inset-inline: 7%;
+  bottom: 9cqw;
+  text-align: center;
+  text-wrap: balance;
+  color: #fff;
+  font-size: 6.4cqw;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  transition: opacity 0.25s ease;
+}
+
+.phone-prompt.out {
+  opacity: 0;
+}
+
+.phone-prompt .w {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.phone-prompt .w.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ===== Prompt pills carousel ===== */
+.pills {
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 28px,
+    #000 calc(100% - 28px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 28px,
+    #000 calc(100% - 28px),
+    transparent 100%
+  );
+}
+
+.pills-desktop {
+  display: none;
+  margin-top: 12px;
+  padding: 12px 0 32px;
+}
+
+.pills-mobile {
+  padding: 12px 0 32px;
+}
+
+.pills-track {
+  display: flex;
+  gap: 8px;
+  width: max-content;
+  padding-left: 28px;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--pill-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.pill-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background: var(--pill-fill);
+}
+
+.pill.active .pill-fill {
+  width: 100%;
+  transition: width var(--fill-ms, 3000ms) linear;
+}
+
+.pill-body {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pill-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+/* ===== Mobile CTA block ===== */
+.hero-ctas-mobile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 320px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 8px 0 32px;
+}
+
+/* ===== Footer (sticky reveal) ===== */
+.footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 0;
+  overflow: clip;
+  background: var(--footer-bg);
+  color: var(--footer-fg);
+  padding: 0 32px 48px;
+}
+
+.footer-mark {
+  --mark-size: min(19.5vw, 205px);
+  font-size: var(--mark-size);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 0.85;
+  text-align: center;
+  color: var(--footer-mark);
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6),
+    0 -2px 6px rgba(44, 42, 38, 0.1);
+  user-select: none;
+  pointer-events: none;
+  /* pull the top 30% above the footer edge; overflow:clip hides it,
+     so scrolling can only ever reveal 70% of the wordmark */
+  margin-top: calc(var(--mark-size) * -0.255);
+}
+
+.footer-inner {
+  display: flex;
+  gap: 10px;
+  max-width: 1000px;
+  margin: 40px auto 0;
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 48px;
+  flex: 1 1 183px;
+}
+
+.footer-logo .logo-mark {
+  width: 28px;
+  height: 28px;
+}
+
+.footer-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.footer-meta p {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-social a {
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  color: var(--footer-fg-secondary);
+  transition: color 0.15s ease;
+}
+
+.footer-social a:hover {
+  color: var(--footer-fg);
+}
+
+.footer-social svg {
+  width: 100%;
+  height: 100%;
+}
+
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1 1 183px;
+  font-size: 15px;
+}
+
+.footer-nav a {
+  color: var(--footer-fg-secondary);
+  transition: color 0.15s ease;
+}
+
+.footer-nav a:hover {
+  color: var(--footer-fg);
+}
+
+/* ===== Desktop (lg) ===== */
+@media (min-width: 1024px) {
+  .hero-section {
+    min-height: 97svh;
+  }
+
+  .mheader {
+    display: none;
+  }
+
+  .hero-inner {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  .hero-left {
+    width: auto;
+    max-width: 420px;
+    justify-content: center;
+    gap: 32px;
+  }
+
+  .hero-logo {
+    display: flex;
+  }
+
+  .hero-headline {
+    font-size: 60px;
+    white-space: normal;
+  }
+
+  .hero-headline .line2 {
+    display: block;
+  }
+
+  .hero-ctas {
+    display: flex;
+  }
+
+  .hero-right {
+    --phone-h: min(76svh, 700px);
+    flex: none;
+    justify-content: center;
+    width: auto;
+  }
+
+  .phone {
+    --pw: calc(var(--phone-h) * 402 / 874);
+    height: var(--phone-h);
+    width: var(--pw);
+  }
+
+  .pills-desktop {
+    display: block;
+    width: calc(var(--phone-h) * 402 / 874 + 96px);
+  }
+
+  .pill-icon {
+    font-size: 28px;
+  }
+
+  .pills-mobile {
+    display: none;
+  }
+
+  .hero-ctas-mobile {
+    display: none;
+  }
+
+  .footer {
+    padding-top: 0;
+  }
+
+  .footer-inner {
+    margin-top: 56px;
+  }
+
+  .footer-left {
+    flex: 1;
+  }
+
+  .footer-nav {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 40px;
+    row-gap: 28px;
+    flex: none;
+    align-self: flex-start;
+  }
+}
